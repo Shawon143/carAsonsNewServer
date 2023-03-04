@@ -1,13 +1,14 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const objectID = require("mongodb").ObjectId;
 
 require("dotenv").config();
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
-//middle ware
+// middle ware
 app.use(cors());
 app.use(express.json());
 
@@ -77,7 +78,7 @@ async function run() {
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
       // console.log("id", id);
-      const query = { _id: objectID(id) };
+      const query = { _id: new objectID(id) };
       const cars = await carCollection.findOne(query);
       res.json(cars);
     });
@@ -85,7 +86,7 @@ async function run() {
     app.get("/dashboard/manageproducts/update/:id", async (req, res) => {
       const id = req.params.id;
       // console.log("id", id);
-      const query = { _id: objectID(id) };
+      const query = { _id: new objectID(id) };
       const cars = await carCollection.findOne(query);
       res.json(cars);
     });
@@ -94,7 +95,7 @@ async function run() {
     app.put("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const updateProduct = req.body;
-      const filter = { _id: objectID(id) };
+      const filter = { _id: new objectID(id) };
       const option = { upsert: true };
       const updateDoc = {
         $set: {
@@ -114,7 +115,7 @@ async function run() {
     app.get("/orders/:id", async (req, res) => {
       const id = req.params.id;
       // console.log("id", id);
-      const query = { _id: objectID(id) };
+      const query = { _id: new objectID(id) };
       const cars = await orderCollection.findOne(query);
       res.json(cars);
     });
@@ -148,7 +149,7 @@ async function run() {
 
     app.delete("/orders/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { _id: objectID(id) };
+      const query = { _id: new objectID(id) };
       const result = await orderCollection.deleteOne(query);
       res.json(result);
     });
@@ -157,7 +158,7 @@ async function run() {
 
     app.delete("/cars/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { _id: objectID(id) };
+      const query = { _id: new objectID(id) };
       const result = await carCollection.deleteOne(query);
       res.json(result);
     });
@@ -224,7 +225,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("ecom  is running");
+  res.send("Car Asons limited is running");
 });
 
 app.listen(port, () => {

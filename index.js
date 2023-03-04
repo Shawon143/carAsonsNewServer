@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = `mongodb+srv://car-asons-limited:msIUaY0cbPENYvqS@cluster0.sfpfh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
